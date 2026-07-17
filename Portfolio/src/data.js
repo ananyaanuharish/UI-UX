@@ -112,7 +112,7 @@ export const projects = [
   {
     name: "EPFO Registration Automation",
     org: "Wisemonk",
-    year: "2025",
+    year: "2026",
     role: "Design + Full stack",
     blurb:
       "Manual EPFO registration took 8 minutes per hire. I built the full fix a Playwright bot that cuts it to under 2 minutes, a REST API tracking each step in real time, and a React ops dashboard with live logs and a re-verify action. Result: 75% faster.",
@@ -130,7 +130,7 @@ export const projects = [
   {
     name: "AI Customer Workflow",
     org: "Personal AI Project",
-    year: "2025",
+    year: "2026",
     role: "AI Workflow Design",
     blurb:
       "Managing leads manually meant reading every email, scoring interest by gut, drafting follow-ups from scratch, and copy-pasting updates into a spreadsheet. I built an AI workflow that reads incoming leads from email, scores and classifies them, auto-drafts personalised outreach messages, and syncs every update back to a CRM table in Coda — zero manual entry, zero missed follow-ups.",
@@ -148,7 +148,7 @@ export const projects = [
   {
     name: "Taskify Pro",
     org: "Full-Stack Productivity App",
-    year: "2024",
+    year: "2025",
     role: "Design + Full-stack",
     blurb:
       "A productivity app built around UX delight and accessibility smooth Framer Motion page transitions, gradient visual hierarchy, and voice to text input alongside JWT auth, full CRUD, a recycle bin with restore, and due-date tracking. Proof that polish and function can coexist.",
