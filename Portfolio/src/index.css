@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS — single source of truth
+   Palette + type mirror glance.com (InMobi): a bright, premium,
+   white canvas with an electric violet→magenta signature gradient
+   and playful sky / green / orange tile pops.
+   ============================================================ */
+@theme {
+  /* Surfaces — light & airy, like glance.com */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f8f8fc;
+  --color-bg-tint: #f4f2fb;
+  --color-surface: #ffffff;
+  --color-border: #ece9f4;
+  --color-border-strong: #ddd8ec;
+
+  /* Ink */
+  --color-ink: #14121c;
+  --color-ink-soft: #55516a;
+  --color-ink-mute: #8b879c;
+
+  /* Signature gradient stops (pulled from glance.com CSS) */
+  --color-violet: #5a34f5;
+  --color-purple: #8725d6;
+  --color-magenta: #be52c4;
+
+  /* Playful accent pops for bento tiles */
+  --color-sky: #5ec2f9;
+  --color-green: #6fd885;
+  --color-orange: #ff6b35;
+
+  /* Glance's signature pink CTA (from glance.com lock-screen cards) */
+  --color-pink: #f93d66;
+
+  /* Type roles */
+  --font-display: "Bricolage Grotesque", "Manrope", system-ui, sans-serif;
+  --font-sans: "Manrope", system-ui, sans-serif;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   DARK THEME — swap surface + ink tokens under .dark.
+   Brand accents (violet/magenta/pink/…) stay identical so the
+   identity holds. Applied by toggling `.dark` on <html>.
+   ============================================================ */
+.dark {
+  --color-bg: #0a0912;
+  --color-bg-soft: #12111d;
+  --color-bg-tint: #171526;
+  --color-surface: #14131f;
+  --color-border: #26243a;
+  --color-border-strong: #35324e;
+
+  --color-ink: #f4f2fb;
+  --color-ink-soft: #b8b4cc;
+  --color-ink-mute: #837f9a;
+
+  --dot-color: #ffffff18;
+  --orb-opacity: 1.9;
+}
+
+:root {
+  --dot-color: #00000010;
+  --orb-opacity: 1;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+/* Smooth theme crossfade */
+body,
+.card,
+.chip,
+.glass {
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-magenta) 30%, transparent);
+  color: var(--color-ink);
+}
+
+/* Focus ring — accessibility first (WCAG) */
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 11px; }
+::-webkit-scrollbar-track { background: var(--color-bg-soft); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 99px;
+  border: 3px solid var(--color-bg-soft);
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+
+/* Signature gradient text */
+.text-gradient {
+  background: linear-gradient(100deg, var(--color-violet) 0%, var(--color-purple) 45%, var(--color-magenta) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.bg-gradient-brand {
+  background: linear-gradient(100deg, var(--color-violet) 0%, var(--color-purple) 50%, var(--color-magenta) 100%);
+}
+
+/* Bento / feature card */
+.card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1.75rem;
+  transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo), border-color 0.4s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 24px 60px -24px rgba(90, 52, 245, 0.22);
+}
+
+/* Soft chip */
+.chip {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-soft);
+  border-radius: 999px;
+}
+
+/* Frosted glass — adapts to theme via --color-surface */
+.glass {
+  background: color-mix(in oklab, var(--color-surface) 78%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--color-border);
+}
+
+/* Ambient gradient orbs */
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(4%, -6%) scale(1.08); }
+  66% { transform: translate(-5%, 4%) scale(0.96); }
+}
+.orb {
+  filter: blur(70px);
+  animation: drift 24s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Morphing gradient blob (CodePen-style) */
+@keyframes blob-morph {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; transform: rotate(0deg) scale(1); }
+  33% { border-radius: 63% 37% 38% 62% / 63% 41% 59% 37%; transform: rotate(60deg) scale(1.08); }
+  66% { border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%; transform: rotate(-40deg) scale(0.94); }
+}
+.blob {
+  animation: blob-morph 18s ease-in-out infinite;
+  will-change: border-radius, transform;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 34s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* Reduced motion (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
